@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
+
+    @State private var showHomeScreen : Bool = false
+    var body: some View {
     NavigationStack {
       VStack {
          
@@ -54,6 +56,23 @@ struct ContentView: View {
               NavigationLink("Banana" , value: Fruit(name: "Banana"))
               NavigationLink("Orange" , value: Fruit(name: "Orange"))
           }
+          
+          //Programmatically navigating to next Screen
+          Button {
+              //perform necessary operations to check if the navgation should be allowed or not
+              let x = 12
+              if (x>10){
+                  //perform navigation
+                  self.showHomeScreen = true
+              }
+              } label:{
+                  Text("Check condition")
+                      .font(.title)
+                      .fontWeight(.bold)
+                      .foregroundStyle(.indigo)
+                      .padding(.top ,25)
+              }
+          
         Spacer()
       }
       .frame(minWidth: 0,maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -61,7 +80,20 @@ struct ContentView: View {
       .navigationBarTitleDisplayMode(.inline)
       .navigationDestination(for: Fruit.self) {
           fruit in ValueScreen(fruit:     fruit)
+      }//navigationDestination
+      .navigationDestination( isPresented: $showHomeScreen){
+          HomeScreen()
       }
+        
+        .onAppear(){
+            //event triggers when the View appears on the screen or comes in foreground
+            print(#function , "ContantView - VStack appeared")
+        }
+        .onDisappear(){
+            //event triggers when View is discarded or removed from foreground
+            //perform opertion like saving/synchrnzation data , stop refreshing data , etc.
+            print(#function, " COntantView - VStack Disappeared")
+        }
     } // navigationStack
   
   }//body

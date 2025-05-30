@@ -25,6 +25,15 @@ struct ValueScreen: View {
         
             .navigationTitle(Text("Value -Destinaiton"))
             .navigationBarTitleDisplayMode(.inline)
+        
+        .onAppear(){
+            
+            print(#function , "Value Screen appeared")
+        }
+        .onDisappear(){
+           
+            print(#function, " Value Screen Disappeared")
+        }
     }
 }
 
